@@ -1,9 +1,11 @@
 {
   "version": "0.16.0",
   "tag": "v0.16.0",
-  "publishedAt": "2026-09-28T05:41:26.285Z",
+  "publishedAt": "2026-09-28T06:07:37.865Z",
   "previousVersion": "0.15.2",
   "changelog": [
+    "fix: обновлятель включается сразу после установки",
+    "fix(ci): шаги публикации манифеста копировали update.json до чекаута",
     "fix(ci): ручной запуск Release принимает версию с ведущим v",
     "fix(ci): ручной запуск Release больше не требует существующий тег",
     "v0.16.0: русскоязычный интерфейс, один нативный установщик, версия одной командой",
@@ -19,5 +21,5 @@
   "assets": {
     "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.16.0/helpdesk-portal-0.16.0-native.tar.gz"
   },
-  "checksum": "5ecb87e7afc7f3a3829b364556c31d898380046e3e49892eedc7fd679f794192"
+  "checksum": "0d907cc1b15596ec5398c902fa64bca594af614cdda42be02396ed82572aa51e"
 }
