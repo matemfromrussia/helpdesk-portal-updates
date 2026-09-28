@@ -5,6 +5,10 @@ SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 ROOT_DIR=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
 COMPOSE_FILE=${COMPOSE_FILE:-"$ROOT_DIR/docker-compose.prod.yml"}
 ENV_FILE=${ENV_FILE:-"$ROOT_DIR/.env"}
+# Версия самого обновлятеля: нужна для флага --version и для проверки замены
+# файла после скачивания. Обновляется при публикации скриптов.
+SCRIPT_VERSION=0.16.0
+
 MANIFEST_URL=${UPDATE_MANIFEST_URL:-}
 MANIFEST_TOKEN=${UPDATE_MANIFEST_TOKEN:-}
 OFFLINE_BUNDLE=${UPDATE_OFFLINE_BUNDLE:-}
@@ -32,6 +36,7 @@ usage() {
       --offline D   путь к оффлайн-бандлу новой версии (или UPDATE_OFFLINE_BUNDLE)
       --check       только показать, что доступно обновление
   -h, --help        эта справка
+      --version     показать версию самого обновлятеля и выйти
 
 Переменные окружения:
   COMPOSE_FILE, ENV_FILE, HEALTH_TIMEOUT, ASSUME_YES=1
@@ -51,6 +56,7 @@ while [ $# -gt 0 ]; do
     --token) MANIFEST_TOKEN=${2:-}; shift ;;
     --offline) OFFLINE_BUNDLE=${2:-}; shift ;;
     -h|--help) usage; exit 0 ;;
+    --version) echo "helpdesk-portal update.sh $SCRIPT_VERSION"; exit 0 ;;
     -*) die "неизвестный флаг: $1" ;;
     *) TARGET_VERSION=$1 ;;
   esac
