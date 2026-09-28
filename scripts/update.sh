@@ -288,13 +288,20 @@ COMPOSE_WRAPPER="$ROOT_DIR/compose.sh"
 if [ -x "$COMPOSE_WRAPPER" ]; then
   compose() { "$COMPOSE_WRAPPER" "$@"; }
 else
+  # Скрипт объявлен через /bin/sh и обязан работать в dash, поэтому здесь
+  # никаких массивов bash (local -a ... =( ... )) — dash их не умеет и падает
+  # с синтаксической ошибкой ещё до выполнения. Файлы compose подставляются
+  # через $COMPOSE_FILES с разделением пробелами.
   compose() {
-    local -a files=(-p "$(project_name)" -f "$COMPOSE_FILE")
-    [ "$(image_source)" = "offline" ] && [ -f "$ROOT_DIR/deploy/offline/docker-compose.offline.yml" ] \
-      && files+=(-f deploy/offline/docker-compose.offline.yml)
-    [ "$(secrets_mode)" = "files" ] && [ -f "$ROOT_DIR/deploy/docker-compose.secrets.yml" ] \
-      && files+=(-f deploy/docker-compose.secrets.yml)
-    docker compose "${files[@]}" --env-file "$ENV_FILE" "$@"
+    files="-p $(project_name) -f $COMPOSE_FILE"
+    if [ "$(image_source)" = "offline" ] && [ -f "$ROOT_DIR/deploy/offline/docker-compose.offline.yml" ]; then
+      files="$files -f deploy/offline/docker-compose.offline.yml"
+    fi
+    if [ "$(secrets_mode)" = "files" ] && [ -f "$ROOT_DIR/deploy/docker-compose.secrets.yml" ]; then
+      files="$files -f deploy/docker-compose.secrets.yml"
+    fi
+    # shellcheck disable=SC2086  # список файлов намеренно разбивается по словам
+    docker compose $files --env-file "$ENV_FILE" "$@"
   }
 fi
 
