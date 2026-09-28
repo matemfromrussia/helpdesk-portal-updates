@@ -1,9 +1,11 @@
 {
   "version": "0.16.0",
   "tag": "v0.16.0",
-  "publishedAt": "2026-09-28T06:07:37.865Z",
+  "publishedAt": "2026-09-28T06:31:10.443Z",
   "previousVersion": "0.15.2",
   "changelog": [
+    "fix(ci): убрано задвоение джобы native, восстановлены её шаги развёртки",
+    "fix(ci): релизный конвейер без артефактов и с правильным тегом",
     "fix: обновлятель включается сразу после установки",
     "fix(ci): шаги публикации манифеста копировали update.json до чекаута",
     "fix(ci): ручной запуск Release принимает версию с ведущим v",
@@ -21,5 +23,5 @@
   "assets": {
     "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.16.0/helpdesk-portal-0.16.0-native.tar.gz"
   },
-  "checksum": "0d907cc1b15596ec5398c902fa64bca594af614cdda42be02396ed82572aa51e"
+  "checksum": "42eb79291da6da67a29a5fe9ba2245d44029f27d2410c6cc7299f287b0ed3bd3"
 }
