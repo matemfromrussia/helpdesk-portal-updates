@@ -399,6 +399,38 @@ else
     else
       log "UPDATE_GHCR_TOKEN не задан — использую существующий docker login"
     fi
+    # Предпроверка до перекачки: без неё compose pull повторяет одну и ту же
+    # ошибку десятки раз и падает без объяснения (в логе стенда так и вышло).
+    # docker manifest inspect отвечает за ~2 секунды и говорит прямо.
+    probe_ref=$target_api
+    case "$target_api" in
+      *:*) probe_ref=$target_api ;;
+      *)   probe_ref="$target_api:$AVAILABLE_VERSION" ;;
+    esac
+    if ! docker manifest inspect "$probe_ref" > /dev/null 2> /tmp/update-probe.txt; then
+      probe_err=$(head -n 1 /tmp/update-probe.txt 2> /dev/null || echo "")
+      rm -f /tmp/update-probe.txt
+      cat >&2 <<EOF
+[update] ОШИБКА: нет доступа к образу $probe_ref
+
+Ответ реестра: ${probe_err:-нет ответа}
+
+Образы лежат в приватном GHCR, поэтому до загрузки нужен вход:
+
+  # вариант 1 — разовый вход (без записи токена в файлы проекта)
+  read -rsp 'GHCR токен (scope read:packages): ' TOKEN; echo
+  printf '%s' "\$TOKEN" | docker login ghcr.io -u <ваш-логин> --password-stdin
+
+  # вариант 2 — вписать в .env установки, обновлятор войдёт сам
+  #   UPDATE_GHCR_USER=<ваш-логин>
+  #   UPDATE_GHCR_TOKEN=<токен>
+
+Либо обновиться оффлайн-бандлом, для которого реестр не нужен:
+  scripts/update.sh $AVAILABLE_VERSION --offline /путь/к/bандл
+EOF
+      exit 1
+    fi
+    rm -f /tmp/update-probe.txt
     log "подтягиваю образы $target_api:$AVAILABLE_VERSION и $target_web:$AVAILABLE_VERSION"
     if ! compose pull; then
       die "не удалось получить образы (проверьте docker login и права на репозиторий)"
