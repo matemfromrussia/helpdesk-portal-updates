@@ -459,6 +459,49 @@ fi
 log "запускаю сервисы"
 compose up -d --remove-orphans
 
+rollback() {
+  log "откат на $CURRENT_VERSION"
+  cp "$ENV_BACKUP" "$ENV_FILE"
+  export APP_VERSION=$CURRENT_VERSION
+  compose up -d --remove-orphans || true
+  wait_healthy || true
+}
+
+# Проверяем, что контейнеры поднялись именно с новым образом.
+#
+# Одного «healthy» мало: если образ не скачался, compose может оставить прежние
+# контейнеры, они останутся healthy, и обновление рапортовало бы об успехе при
+# старой версии. Именно так вышло на стенде: .env записали 0.16.1, а контейнеры
+# остались 0.14.7. Смотрим на .Config.Image каждого контейнера, а не на статус.
+verify_running_images() {
+  [ "$(image_source)" = "offline" ] && return 0
+  for svc in api web; do
+    cid=$(compose ps -q "$svc" 2> /dev/null | head -n 1)
+    if [ -z "$cid" ]; then
+      printf '  %s: контейнер не найден\n' "$svc" >&2
+      return 1
+    fi
+    actual=$(docker inspect --format '{{.Config.Image}}' "$cid" 2> /dev/null)
+    expected=$(image_ref "API_IMAGE" "helpdesk-portal-api:$AVAILABLE_VERSION")
+    [ "$svc" = "web" ] && expected=$(image_ref "WEB_IMAGE" "helpdesk-portal-web:$AVAILABLE_VERSION")
+    case "$expected" in
+      *:*) ;;
+      *) expected="$expected:$AVAILABLE_VERSION" ;;
+    esac
+    if [ "$actual" != "$expected" ]; then
+      printf '  %s: запущен %s, а ожидался %s\n' "$svc" "$actual" "$expected" >&2
+      return 1
+    fi
+  done
+  return 0
+}
+
+if ! verify_running_images; then
+  log "контейнеры поднялись не с новым образом"
+  rollback
+  die "образ не применился, выполнен откат на $CURRENT_VERSION"
+fi
+
 wait_healthy() {
   elapsed=0
   while [ "$elapsed" -lt "$HEALTH_TIMEOUT" ]; do
@@ -496,7 +539,11 @@ if command -v curl > /dev/null 2>&1; then
     reported=$(curl -fsSL --max-time 10 "${api_url%/}/api/health" 2> /dev/null \
       | node -e "let r='';process.stdin.on('data',c=>r+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(r).version||'')}catch{console.log('')}})" || true)
     if [ -n "$reported" ] && [ "$reported" != "$AVAILABLE_VERSION" ]; then
-      log "WARNING: /api/health сообщает версию $reported вместо $AVAILABLE_VERSION"
+      # Раньше здесь было предупреждение, и обновление завершалось «успехом»:
+      # на стенде .env записали 0.16.1, а /api/health отвечал 0.14.7, и это
+      # просто проходило мимо. Несовпадение версии — это несовпадение версии.
+      rollback
+      die "система отвечает версией $reported вместо $AVAILABLE_VERSION, выполнен откат на $CURRENT_VERSION"
     fi
   fi
 fi
