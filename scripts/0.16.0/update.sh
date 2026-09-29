@@ -157,7 +157,7 @@ json_field() {
     process.stdin.on('data',c=>raw+=c);
     process.stdin.on('end',()=>{
       const data=JSON.parse(raw);
-      // Поддерж��вается вложенный путь: images.api
+      // Поддерживается вложенный путь: images.api
       const value='$1'.split('.').reduce((acc,key)=>acc&&acc[key],data);
       if (Array.isArray(value)) { console.log(value.join('\n')); }
       else if (value===undefined || value===null) { console.log(''); }
