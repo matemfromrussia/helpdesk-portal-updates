@@ -1,17 +1,16 @@
 {
-  "version": "0.17.5",
-  "tag": "v0.17.5",
-  "publishedAt": "2026-10-02T06:37:04.068Z",
-  "previousVersion": "0.17.4",
+  "version": "0.17.6",
+  "tag": "v0.17.6",
+  "publishedAt": "2026-10-02T07:03:17.354Z",
+  "previousVersion": "0.17.5",
   "changelog": [
-    "**Забиралось только 2000 сотрудников из каталога.** Постраничный запрос не уходил на сервер вовсе, поэтому каталог отдавал первые две тысячи за один ответ и упирался в свой предел. Теперь страницы запрашиваются по 500, обход продолжается по cookie.",
-    "**Настройку размера выдачи в каталоге менять, скорее всего, не придётся.**"
+    "**Обход останавливался после первой страницы.** Cookie следующей страницы приходил от библиотеки с пометкой `type`, а разбор искал `oid`, поэтому ответ не распознавался. В 0.17.5 стало хуже: вместо двух тысяч приходило пятьсот."
   ],
   "images": {
-    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.5",
-    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.5"
+    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.6",
+    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.6"
   },
   "assets": {
-    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.5/helpdesk-portal-0.17.5-native.tar.gz"
+    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.6/helpdesk-portal-0.17.6-native.tar.gz"
   }
 }
