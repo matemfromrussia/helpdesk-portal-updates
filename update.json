@@ -1,18 +1,17 @@
 {
-  "version": "0.17.4",
-  "tag": "v0.17.4",
-  "publishedAt": "2026-10-02T05:17:33.873Z",
-  "previousVersion": "0.17.3",
+  "version": "0.17.5",
+  "tag": "v0.17.5",
+  "publishedAt": "2026-10-02T06:37:04.068Z",
+  "previousVersion": "0.17.4",
   "changelog": [
-    "**Причина отказа каталога при входе не попадала в журнал.** Теперь рядом с неудачным входом есть запись «Каталог отклонил вход: причина» — без доступа к логам контейнера отказ больше не загадка.",
-    "**Ручная синхронизация не показывала, куда делись записи.** В ответе и журнале теперь есть разбивка по причинам: компьютеры, записи без почты, нечитаемые.",
-    "**Видно, шла ли выборка постранично.** В журнале и в ответе — число страниц и их размеры."
+    "**Забиралось только 2000 сотрудников из каталога.** Постраничный запрос не уходил на сервер вовсе, поэтому каталог отдавал первые две тысячи за один ответ и упирался в свой предел. Теперь страницы запрашиваются по 500, обход продолжается по cookie.",
+    "**Настройку размера выдачи в каталоге менять, скорее всего, не придётся.**"
   ],
   "images": {
-    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.4",
-    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.4"
+    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.5",
+    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.5"
   },
   "assets": {
-    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.4/helpdesk-portal-0.17.4-native.tar.gz"
+    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.5/helpdesk-portal-0.17.5-native.tar.gz"
   }
 }
