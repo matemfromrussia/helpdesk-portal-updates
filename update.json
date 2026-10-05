@@ -1,17 +1,18 @@
 {
-  "version": "0.17.8",
-  "tag": "v0.17.8",
-  "publishedAt": "2026-10-05T01:58:47.218Z",
-  "previousVersion": "0.17.7",
+  "version": "0.17.9",
+  "tag": "v0.17.9",
+  "publishedAt": "2026-10-05T05:28:55.641Z",
+  "previousVersion": "0.17.8",
   "changelog": [
-    "**Контрол лежал в ответе, а смотрели не туда.** У любого сообщения `ldapjs` есть свойство `type`, и проверка принимала само сообщение за контрол — до списка `controls` дело не доходило. Постраничный cookie не читался никогда, ни в одной версии.",
-    "Проверено на настоящем сообщении библиотеки, а не на подставном объекте: прежняя проверка и новая дают разный результат на одном и том же ответе."
+    "**В журнал синхронизации добавлена разбивка по страницам.** Видно, какое значение размера выборки сообщал каталог, какой длины cookie прислал и кто оборвал страницу — по этому видно, почему обход остановился на второй странице.",
+    "**В журнале видно, собрано ли столько, сколько насчитал каталог.** Появляется прямое сравнение вместо догадок об обрыве.",
+    "Само постраничность работает: cookie приходит и обход продолжается."
   ],
   "images": {
-    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.8",
-    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.8"
+    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.9",
+    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.9"
   },
   "assets": {
-    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.8/helpdesk-portal-0.17.8-native.tar.gz"
+    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.9/helpdesk-portal-0.17.9-native.tar.gz"
   }
 }
