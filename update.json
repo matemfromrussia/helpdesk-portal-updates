@@ -1,17 +1,17 @@
 {
-  "version": "0.17.7",
-  "tag": "v0.17.7",
-  "publishedAt": "2026-10-02T07:48:58.847Z",
-  "previousVersion": "0.17.6",
+  "version": "0.17.8",
+  "tag": "v0.17.8",
+  "publishedAt": "2026-10-05T01:58:47.218Z",
+  "previousVersion": "0.17.7",
   "changelog": [
-    "**Cookie страницы читался не оттуда, откуда он приходит.** Ответ приходит с сообщением об окончании поиска, а он читался в момент отправки запроса, где ещё ничего нет, поэтому обход всегда обрывался после первой страницы.",
-    "**Признаки постраничности видны и при ручной синхронизации.** Раньше они были только в записи по домену, которую ручной запуск как раз и глушит."
+    "**Контрол лежал в ответе, а смотрели не туда.** У любого сообщения `ldapjs` есть свойство `type`, и проверка принимала само сообщение за контрол — до списка `controls` дело не доходило. Постраничный cookie не читался никогда, ни в одной версии.",
+    "Проверено на настоящем сообщении библиотеки, а не на подставном объекте: прежняя проверка и новая дают разный результат на одном и том же ответе."
   ],
   "images": {
-    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.7",
-    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.7"
+    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.8",
+    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.8"
   },
   "assets": {
-    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.7/helpdesk-portal-0.17.7-native.tar.gz"
+    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.8/helpdesk-portal-0.17.8-native.tar.gz"
   }
 }
