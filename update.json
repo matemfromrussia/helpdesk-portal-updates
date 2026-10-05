@@ -1,17 +1,17 @@
 {
-  "version": "0.17.11",
-  "tag": "v0.17.11",
-  "publishedAt": "2026-10-05T08:36:52.028Z",
-  "previousVersion": "0.17.9",
+  "version": "0.17.12",
+  "tag": "v0.17.12",
+  "publishedAt": "2026-10-05T09:11:34.006Z",
+  "previousVersion": "0.17.11",
   "changelog": [
-    "**Записи без `mail` перестали выпадать из-за регистра в `baseDn`.** Имя домена собиралось из компонентов `dc=` с учётом регистра, и при `DC=` оно оказывалось пустым — запасная почта не подставлялась, и записи уходили в «без почты».",
-    "Пересохранение домена с правильным регистром больше не требуется."
+    "**Контрол постраничных результатов отправляется критичным, как это делает `ldapsearch`.** Некритичный контрол каталог вправе просто проигнорировать — тогда вместо обхода страниц получается обычный поиск, который упирается в потолок каталога.",
+    "Если каталог не может принять контрол, он теперь сообщает об этом отказом, а не возвращает посторонние записи."
   ],
   "images": {
-    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.11",
-    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.11"
+    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.12",
+    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.12"
   },
   "assets": {
-    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.11/helpdesk-portal-0.17.11-native.tar.gz"
+    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.12/helpdesk-portal-0.17.12-native.tar.gz"
   }
 }
