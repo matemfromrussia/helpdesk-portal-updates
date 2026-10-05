@@ -1,18 +1,17 @@
 {
-  "version": "0.17.9",
-  "tag": "v0.17.9",
-  "publishedAt": "2026-10-05T05:28:55.641Z",
-  "previousVersion": "0.17.8",
+  "version": "0.17.11",
+  "tag": "v0.17.11",
+  "publishedAt": "2026-10-05T08:36:52.028Z",
+  "previousVersion": "0.17.9",
   "changelog": [
-    "**В журнал синхронизации добавлена разбивка по страницам.** Видно, какое значение размера выборки сообщал каталог, какой длины cookie прислал и кто оборвал страницу — по этому видно, почему обход остановился на второй странице.",
-    "**В журнале видно, собрано ли столько, сколько насчитал каталог.** Появляется прямое сравнение вместо догадок об обрыве.",
-    "Само постраничность работает: cookie приходит и обход продолжается."
+    "**Записи без `mail` перестали выпадать из-за регистра в `baseDn`.** Имя домена собиралось из компонентов `dc=` с учётом регистра, и при `DC=` оно оказывалось пустым — запасная почта не подставлялась, и записи уходили в «без почты».",
+    "Пересохранение домена с правильным регистром больше не требуется."
   ],
   "images": {
-    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.9",
-    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.9"
+    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.11",
+    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.11"
   },
   "assets": {
-    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.9/helpdesk-portal-0.17.9-native.tar.gz"
+    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.11/helpdesk-portal-0.17.11-native.tar.gz"
   }
 }
