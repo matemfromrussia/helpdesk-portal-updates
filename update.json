@@ -1,17 +1,17 @@
 {
-  "version": "0.17.13",
-  "tag": "v0.17.13",
-  "publishedAt": "2026-10-06T02:07:33.065Z",
-  "previousVersion": "0.17.12",
+  "version": "0.17.14",
+  "tag": "v0.17.14",
+  "publishedAt": "2026-10-06T04:12:47.839Z",
+  "previousVersion": "0.17.13",
   "changelog": [
-    "**Возврат к некритичному постраничному контролу: в 0.17.12 синхронизация на Active Directory падала.** Каталог отвечал отказом `Unavailable Critical Extension`.",
-    "В журнал добавлены байты cookie, которые уходят в запрос, и перехват сырых байтов ответа — по ним проверяется, эхо ли мы того, что прислал каталог."
+    "**Постраничный обход идёт по одному соединению.** Cookie «продолжить с этого места» каталог выдаёт под конкретное соединение; на новом соединении она недействительна, и обход обрывался после первой страницы.",
+    "Полная выборка каталога вместо первой страницы — это и была причина «часть сотрудников не попадёт»."
   ],
   "images": {
-    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.13",
-    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.13"
+    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.14",
+    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.14"
   },
   "assets": {
-    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.13/helpdesk-portal-0.17.13-native.tar.gz"
+    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.14/helpdesk-portal-0.17.14-native.tar.gz"
   }
 }
