@@ -1,17 +1,17 @@
 {
-  "version": "0.17.12",
-  "tag": "v0.17.12",
-  "publishedAt": "2026-10-05T09:11:34.006Z",
-  "previousVersion": "0.17.11",
+  "version": "0.17.13",
+  "tag": "v0.17.13",
+  "publishedAt": "2026-10-06T02:07:33.065Z",
+  "previousVersion": "0.17.12",
   "changelog": [
-    "**Контрол постраничных результатов отправляется критичным, как это делает `ldapsearch`.** Некритичный контрол каталог вправе просто проигнорировать — тогда вместо обхода страниц получается обычный поиск, который упирается в потолок каталога.",
-    "Если каталог не может принять контрол, он теперь сообщает об этом отказом, а не возвращает посторонние записи."
+    "**Возврат к некритичному постраничному контролу: в 0.17.12 синхронизация на Active Directory падала.** Каталог отвечал отказом `Unavailable Critical Extension`.",
+    "В журнал добавлены байты cookie, которые уходят в запрос, и перехват сырых байтов ответа — по ним проверяется, эхо ли мы того, что прислал каталог."
   ],
   "images": {
-    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.12",
-    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.12"
+    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.17.13",
+    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.17.13"
   },
   "assets": {
-    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.12/helpdesk-portal-0.17.12-native.tar.gz"
+    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.17.13/helpdesk-portal-0.17.13-native.tar.gz"
   }
 }
