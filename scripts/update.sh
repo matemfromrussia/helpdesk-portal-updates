@@ -294,20 +294,28 @@ COMPOSE_WRAPPER="$ROOT_DIR/compose.sh"
 if [ -x "$COMPOSE_WRAPPER" ]; then
   compose() { "$COMPOSE_WRAPPER" "$@"; }
 else
-  # Скрипт объявлен через /bin/sh и обязан работать в dash, поэтому здесь
-  # никаких массивов bash (local -a ... =( ... )) — dash их не умеет и падает
-  # с синтаксической ошибкой ещё до выполнения. Файлы compose подставляются
-  # через $COMPOSE_FILES с разделением пробелами.
+  # Скрипт объявлен через /bin/sh и обязан работать в dash, поэтому здесь нет
+  # массивов bash. Список и переменные окружения приходят из
+  # deploy/compose-args.sh — того же источника, которым пользуются установщик и
+  # обёртка. Раньше список был собран здесь заново, и правило «забытый override-файл
+  # — упавший API» приходилось повторять в каждой копии.
+  #
+  # Элементы списка берутся в кавычки, поэтому путь с пробелом остаётся целым;
+  # аргументы вызова подставляются как "$@" и не теряются.
   compose() {
-    files="-p $(project_name) -f $COMPOSE_FILE"
-    if [ "$(image_source)" = "offline" ] && [ -f "$ROOT_DIR/deploy/offline/docker-compose.offline.yml" ]; then
-      files="$files -f deploy/offline/docker-compose.offline.yml"
-    fi
-    if [ "$(secrets_mode)" = "files" ] && [ -f "$ROOT_DIR/deploy/docker-compose.secrets.yml" ]; then
-      files="$files -f deploy/docker-compose.secrets.yml"
-    fi
-    # shellcheck disable=SC2086  # список файлов намеренно разбивается по словам
-    docker compose $files --env-file "$ENV_FILE" "$@"
+    _list=""
+    while IFS= read -r line; do
+      _list="$_list '$line'"
+    done <<EOF
+$(COMPOSE_ARGS_ROOT="$ROOT_DIR" \
+  COMPOSE_ARGS_PROJECT="$(project_name)" \
+  COMPOSE_ARGS_IMAGES="$(image_source)" \
+  COMPOSE_ARGS_SECRETS="$(secrets_mode)" \
+  SECRETS_DIR="$(env_value SECRETS_DIR)" \
+  "$ROOT_DIR/deploy/compose-args.sh")
+EOF
+    # shellcheck disable=SC2086  # список намеренно разбирается eval'ом
+    eval "docker compose $_list --env-file '$ENV_FILE' \"\$@\""
   }
 fi
 
