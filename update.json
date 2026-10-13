@@ -1,19 +1,18 @@
 {
-  "version": "0.18.0",
-  "tag": "v0.18.0",
-  "publishedAt": "2026-10-13T02:22:26.237Z",
-  "previousVersion": "0.17.14",
+  "version": "0.18.1",
+  "tag": "v0.18.1",
+  "publishedAt": "2026-10-13T07:55:13.265Z",
+  "previousVersion": "0.18.0",
   "changelog": [
-    "**Вторая компания в одной установке больше не смешивается с первой.**",
-    "Установочные права не выдаются по роли; состояние установки суперадмину видно.",
-    "Резервная копия названа общей для установки.",
-    "API-токен не выходит за свои scope; шаблоны отчётов защищены правами."
+    "**Сотрудники с кириллицей в каталоге снова могут войти в систему.**",
+    "Образ API запускается: сид больше не ищется по несуществующему пути.",
+    "Релиз собирается: три ошибки в самой сборке не давали его выпустить."
   ],
   "images": {
-    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.18.0",
-    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.18.0"
+    "api": "ghcr.io/matemfromrussia/helpdesk-portal-api:0.18.1",
+    "web": "ghcr.io/matemfromrussia/helpdesk-portal-web:0.18.1"
   },
   "assets": {
-    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.18.0/helpdesk-portal-0.18.0-native.tar.gz"
+    "native": "https://github.com/matemfromrussia/helpdesk-portal/releases/download/v0.18.1/helpdesk-portal-0.18.1-native.tar.gz"
   }
 }
